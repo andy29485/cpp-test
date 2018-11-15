@@ -9,6 +9,7 @@ find_package(Boost
   COMPONENTS
     thread
     system
+    date_time
     log_setup
     log
 )
