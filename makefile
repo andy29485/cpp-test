@@ -51,16 +51,12 @@ all: $(TARGETS)
 
 # compile binary files -- only link objects in corresponding src/obj dir
 $(TARGETS): $(OBJECTS) $(BINDIR) makefile
-	@echo $(SOURCE_FILES)
 	$(CXX) $(LDFLAGS) $(CPPFLAGS) -o $@ $(filter $(PDIR)%, $(OBJECTS))
 
 # general compile rule
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp $(OBJDIR) $(dir $@) makefile
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.cpp $(OBJDIR) makefile
+	@mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) -c $< -o $@
-
-# make any dir in `objs/` that does not exist
-$(OBJDIR)/%/:
-	mkdir -p $@
 
 # make obj dir if not exist
 $(OBJDIR):
