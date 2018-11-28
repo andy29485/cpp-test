@@ -1,26 +1,14 @@
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
-#include <xercesc/util/PlatformUtils.hpp>
+#include <xmlwrapp/xmlwrapp.h>
 
 #include <iostream>
 
-using namespace xercesc;
 using namespace std;
 
 int main() {
-  XMLPlatformUtils::Initialize();
+  xml::document sch_doc = xml::tree_parser("../extra/test.xsd").get_document();
+  xml::schema sch(sch_doc);
 
-  XercesDOMParser* parser = new XercesDOMParser();
-  parser->setExternalNoNamespaceSchemaLocation("test.xsd");
-  parser->setExitOnFirstFatalError(true);
-  parser->setValidationConstraintFatal(true);
-  parser->setValidationScheme(XercesDOMParser::Val_Auto);
-  parser->setDoNamespaces(true);
-  parser->setDoSchema(true);
+  xml::document doc = xml::tree_parser("../extra/test.xml").get_document();
 
-  try {
-    parser->parse("test.xml");
-  } catch (const DOMException& e) {
-     cout << "Exception.." << endl;
-  }
+  cout << (sch.validate(doc) ? "valid" : "invalid") << endl;
 }

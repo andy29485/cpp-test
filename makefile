@@ -4,6 +4,7 @@
 CXX      := g++
 CPPFLAGS += -DBOOST_LOG_DYN_LINK
 LDFLAGS  += -lpthread
+LDFLAGS  += -lxmlwrapp
 
 # uncomment to compile in debug mode
 # DEBUG = -g
@@ -68,8 +69,8 @@ $(BINDIR):
 
 # delete only object files
 clean:
-	rm -f $(OBJSDIR)/*.o
+	rm -f $(OBJDIR)/*.o $(OBJDIR)/*/*.o
 
 # delete binaries and objects
 cleanall: clean
-	rm -rf $(BINDIR) $(OBJSDIR)
+	rm -rf $(BINDIR) $(OBJDIR)
